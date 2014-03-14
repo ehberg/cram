@@ -1,0 +1,15 @@
+{
+    "name": "pardot/cram",
+    "description": "Cramming as much as we can into HipChat",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Eric Berg",
+            "email": "eric.berg@salesforce.com"
+        }
+    ],
+
+    "require": {
+        "silex/silex": "~1.1"
+    }
+}
