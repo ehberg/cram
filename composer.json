@@ -1,6 +1,6 @@
 {
     "name": "pardot/cram",
-    "description": "Cramming as much as we can into HipChat",
+    "description": "Cramming as much as we can into chat",
     "minimum-stability": "stable",
     "authors": [
         {
@@ -11,6 +11,9 @@
 
     "require": {
         "silex/silex": "~1.1",
-        "twig/twig": ">=1.8,<2.0-dev"
+        "twig/twig": ">=1.8,<2.0-dev",
+        "hipchat/hipchat-php": ">=1.0.0",
+        "symfony/console"       : "~2.4",
+        "doctrine/dbal"         : "~2.3"
     }
 }

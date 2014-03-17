@@ -1,20 +1,17 @@
 <?php
-require_once __DIR__.'/../vendor/autoload.php';
+$loader = require_once __DIR__ . '/../vendor/autoload.php';
+$loader->add('Cram', __DIR__);
 
 use Symfony\Component\HttpFoundation\Response;
-
-// Handle static files
-$filename = __DIR__.preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']);
-if (php_sapi_name() === 'cli-server' && is_file($filename)) {
-	return false;
-}
-
 $app = new Silex\Application();
 
-
+// Setup the twig view paths
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
 	'twig.path' => __DIR__.'/views',
 ));
+
+// Define the Cram and paths
+require_once __DIR__ . '/controllers.php';
 
 // definitions
 $app->get('/', function () use ($app) {
@@ -24,20 +21,16 @@ $app->get('/', function () use ($app) {
 });
 
 
+// Error handling
 $app->error(function (\Exception $e, $code) use ($app) {
 	if ($app['debug']) {
 		return;
 	}
 
-	switch ($code) {
-		case 404:
-			$message = 'The requested page could not be found.';
-			break;
-		default:
-			$message = 'Whoopsie';
-	}
-
-	return new Response($message, $code);
+	return new Response($app['twig']->render('error.html.twig', array(
+		'code' => $code,
+		'message' => $e->getMessage()
+	)), $code);
 });
 
 return $app;
